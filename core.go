@@ -21,7 +21,7 @@ func (cn *connDb) connect() (db *sql.DB,err error) {
 	return
 }
 
-func (cn *connDb) result(query string, args ...interface{}) (rows *sql.Rows,err error){
+func (cn *connDb) results(query string, args ...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.Query(query,args...)
 	if err!=nil {
 		log.Printf("sql:%v,result:%v",query,err)
