@@ -1,24 +1,24 @@
 package sqldata
 
-type ConfigDb struct {
+type configDb struct {
 	Addr string `toml:"addr"`
 	Retry int32 `toml:"retry"`
 	LifeTime int32 `toml:"life_time"`
 	DriverName string `toml:"driver_name`
 }
 
-func (cf *ConfigDb)addr() string {
+func (cf *configDb)addr() string {
 	return cf.Addr
 }
 
-func (cf *ConfigDb)retry() int32 {
+func (cf *configDb)retry() int32 {
 	return cf.Retry
 }
 
-func (cf *ConfigDb)lifeTime() int32 {
+func (cf *configDb)lifeTime() int32 {
 	return cf.LifeTime
 }
 
-func (cf *ConfigDb)driverName() string {
+func (cf *configDb)driverName() string {
 	return cf.DriverName
 }

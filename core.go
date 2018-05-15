@@ -29,15 +29,15 @@ func (cn *connDb) results(query string, args ...interface{}) (rows *sql.Rows,err
 	return
 }
 
-func (cn *connDb) fetchMap(rows *sql.Rows) (results map[int]map[string]string) {
+func (cn *connDb) fetchMap(rows *sql.Rows) (results *ResultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
 	fields := make([]interface{}, len(columns))
 	for i := range values {
 		fields[i] = &values[i]
 	}
-	results = make(map[int]map[string]string)
-	var i int32
+	results = *make(map[int]map[string]string)
+	var ii int32
 	for rows.Next() {
 		if err := rows.Scan(fields...); err != nil {
 			log.Printf("rows scan:%v",err)
@@ -49,11 +49,15 @@ func (cn *connDb) fetchMap(rows *sql.Rows) (results map[int]map[string]string) {
 			key := columns[k]
 			row[key] = string(v)
 		}
-		results[i] = row
-		i++
+		results[ii] = row
+		ii++
 	}
 	return
 	//for k, v := range results {
 	//	fmt.Printf("%d,%v\n",k, v)
 	//}
+}
+
+func (cn *connDb) beginOp() {
+
 }
