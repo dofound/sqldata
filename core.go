@@ -32,14 +32,14 @@ func (cn *connDb) results(query string, args ...interface{}) (rows *sql.Rows,err
 func (cn *connDb) fetchMap(rows *sql.Rows) (results map[int]map[string]string) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
-	scans := make([]interface{}, len(columns))
+	fields := make([]interface{}, len(columns))
 	for i := range values {
-		scans[i] = &values[i]
+		fields[i] = &values[i]
 	}
 	results = make(map[int]map[string]string)
 	var i int32
 	for rows.Next() {
-		if err := rows.Scan(scans...); err != nil {
+		if err := rows.Scan(fields...); err != nil {
 			log.Printf("rows scan:%v",err)
 			//continue
 			return
