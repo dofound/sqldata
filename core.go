@@ -13,7 +13,7 @@ type connDb struct {
 	coreDb *sql.DB
 }
 
-func (cn *connDb) connect() (db *sql.DB,err error) {
+func (cn *connDb)connect() (db *sql.DB,err error) {
 	db,err =sql.Open(cn.driverName,cn.dns)
 	if err!=nil {
 		log.Fatalf("connect fail;%v",err)
@@ -21,7 +21,7 @@ func (cn *connDb) connect() (db *sql.DB,err error) {
 	return
 }
 
-func (cn *connDb) results(query string, args ...interface{}) (rows *sql.Rows,err error){
+func (cn *connDb)results(query string, args ...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.Query(query,args...)
 	if err!=nil {
 		log.Printf("sql:%v,result:%v",query,err)
@@ -29,7 +29,7 @@ func (cn *connDb) results(query string, args ...interface{}) (rows *sql.Rows,err
 	return
 }
 
-func (cn *connDb) fetchMap(rows *sql.Rows) (results *ResultData) {
+func (cn *connDb)fetchMap(rows *sql.Rows) (results *ResultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
 	fields := make([]interface{}, len(columns))
