@@ -20,11 +20,13 @@ func (f *Factory)New(ctx context.Context) (re SqlData) {
 	if f.mock!=nil {
 		re = f.mock
 	} else {
+		tmpConndb,_:=newConnDb(&f.db)
 		re = &implSqlData{
 			ctx:ctx,
-			conndb:newConnDb(&f.db),
+			conndb:tmpConndb,
 		}
 	}
+	return
 }
 
 //SetMock 设置mock
@@ -39,5 +41,5 @@ func (f *Factory) ResetMock() {
 
 //Ping 检查参数
 func (f *Factory) Ping() (err error) {
-
+	return
 }

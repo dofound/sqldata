@@ -15,23 +15,27 @@ type connDb struct {
 }
 
 //newConnDb
-func newConnDb(conf *configDb) (re *connDb) {
+func newConnDb(conf *configDb) (re *connDb,err error) {
 	re = &connDb{
 		dns:conf.Addr,
 		retry:conf.Retry,
 		driverName:conf.DriverName,
 	}
-	re.coreDb,_ = re.connect()
+	re.coreDb,err = re.connect()
 	return
 }
 
 //connect
 func (cn *connDb)connect() (db *sql.DB,err error) {
-	db,err =sql.Open(cn.driverName,cn.dns)
-	if err!=nil {
-		log.Fatalf("connect fail;%v",err)
+	if cn.coreDb!=nil {
+		return cn.coreDb,nil
 	} else {
-		cn.coreDb = db
+		db, err = sql.Open(cn.driverName, cn.dns)
+		if err != nil {
+			log.Fatalf("connect fail;%v", err)
+		} else {
+			cn.coreDb = db
+		}
 	}
 	return
 }
@@ -43,7 +47,7 @@ func (cn *connDb)GetConnDb() (db *sql.DB){
 }
 
 //results
-func (cn *connDb)results(query string, args ...interface{}) (rows *sql.Rows,err error){
+func (cn *connDb)results(query string, args...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.Query(query,args...)
 	if err!=nil {
 		log.Printf("sql:%v,result:%v",query,err)
@@ -52,15 +56,15 @@ func (cn *connDb)results(query string, args ...interface{}) (rows *sql.Rows,err 
 }
 
 //fetchMap
-func (cn *connDb)fetchMap(rows *sql.Rows) (results *ResultData) {
+func (cn *connDb)fetchMap(rows *sql.Rows) (results ResultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
 	fields := make([]interface{}, len(columns))
 	for i := range values {
 		fields[i] = &values[i]
 	}
-	results = *make(map[int]map[string]string)
-	var ii int32
+	results = make(map[int]map[string]string)
+	var ii int
 	for rows.Next() {
 		if err := rows.Scan(fields...); err != nil {
 			log.Printf("rows scan:%v",err)
