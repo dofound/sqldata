@@ -1,0 +1,35 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;sqldata&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/git.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/test" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/github.com" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/.idea" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/golang.org" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/first-idl" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/go.intra.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/first-template" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/msggate" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/myrider-client" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/first-client" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/beegostudy" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/git.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/test" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/github.com" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/.idea" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/golang.org" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/first-idl" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/go.intra.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/first-template" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/msggate" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/myrider-client" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/first-client" />
+      <root url="file://$PROJECT_DIR$/../newgotwo/src/beegostudy" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
