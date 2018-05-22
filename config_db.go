@@ -7,18 +7,22 @@ type configDb struct {
 	DriverName string `toml:"driver_name`
 }
 
+//addr
 func (cf *configDb)addr() string {
 	return cf.Addr
 }
 
+//retry
 func (cf *configDb)retry() int32 {
 	return cf.Retry
 }
 
+//lifeTime
 func (cf *configDb)lifeTime() int32 {
 	return cf.LifeTime
 }
 
+//driverName
 func (cf *configDb)driverName() string {
 	return cf.DriverName
 }

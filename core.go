@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql" //must import
 )
 
+//connDb
 type connDb struct {
 	dns string
 	retry int32
@@ -13,7 +14,7 @@ type connDb struct {
 	coreDb *sql.DB
 }
 
-//
+//newConnDb
 func newConnDb(conf *configDb) (re *connDb) {
 	re = &connDb{
 		dns:conf.Addr,
@@ -24,7 +25,7 @@ func newConnDb(conf *configDb) (re *connDb) {
 	return
 }
 
-//
+//connect
 func (cn *connDb)connect() (db *sql.DB,err error) {
 	db,err =sql.Open(cn.driverName,cn.dns)
 	if err!=nil {
@@ -35,6 +36,13 @@ func (cn *connDb)connect() (db *sql.DB,err error) {
 	return
 }
 
+//GetConnDb
+func (cn *connDb)GetConnDb() (db *sql.DB){
+	db = cn.coreDb
+	return
+}
+
+//results
 func (cn *connDb)results(query string, args ...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.Query(query,args...)
 	if err!=nil {
@@ -43,6 +51,7 @@ func (cn *connDb)results(query string, args ...interface{}) (rows *sql.Rows,err 
 	return
 }
 
+//fetchMap
 func (cn *connDb)fetchMap(rows *sql.Rows) (results *ResultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
@@ -72,6 +81,7 @@ func (cn *connDb)fetchMap(rows *sql.Rows) (results *ResultData) {
 	//}
 }
 
+//beginOp
 func (cn *connDb) beginOp() {
 
 }

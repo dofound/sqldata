@@ -2,17 +2,20 @@ package sqldata
 
 import "context"
 
+//Factory
 type Factory struct {
 	db configDb `toml:"database"`
 	mock SqlData
 }
 
+//NewFactory
 func NewFactory(config *Config) *Factory {
 	return &Factory{
 		db:config.Db,
 	}
 }
 
+//New
 func (f *Factory)New(ctx context.Context) (re SqlData) {
 	if f.mock!=nil {
 		re = f.mock
