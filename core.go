@@ -13,10 +13,24 @@ type connDb struct {
 	coreDb *sql.DB
 }
 
+//
+func newConnDb(conf *configDb) (re *connDb) {
+	re = &connDb{
+		dns:conf.Addr,
+		retry:conf.Retry,
+		driverName:conf.DriverName,
+	}
+	re.coreDb,_ = re.connect()
+	return
+}
+
+//
 func (cn *connDb)connect() (db *sql.DB,err error) {
 	db,err =sql.Open(cn.driverName,cn.dns)
 	if err!=nil {
 		log.Fatalf("connect fail;%v",err)
+	} else {
+		cn.coreDb = db
 	}
 	return
 }
