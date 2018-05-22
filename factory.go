@@ -22,7 +22,7 @@ func (f *Factory)New(ctx context.Context) (re SqlData) {
 	} else {
 		re = &implSqlData{
 			ctx:ctx,
-			conndb:newConnDb(f.db),
+			conndb:newConnDb(&f.db),
 		}
 	}
 }
