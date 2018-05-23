@@ -46,7 +46,8 @@ func (cn *connDb)GetConnDb() (db *sql.DB){
 	return
 }
 
-//results
+//results 组装sql信息，对信息进行处理
+//
 func (cn *connDb)results(query string, args...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.Query(query,args...)
 	if err!=nil {
@@ -55,7 +56,8 @@ func (cn *connDb)results(query string, args...interface{}) (rows *sql.Rows,err e
 	return
 }
 
-//fetchMap
+//fetchMap 获取数据，对数据进行转化成map
+//返回的数据是对 数据表字段为key
 func (cn *connDb)fetchMap(rows *sql.Rows) (results ResultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
@@ -68,21 +70,18 @@ func (cn *connDb)fetchMap(rows *sql.Rows) (results ResultData) {
 	for rows.Next() {
 		if err := rows.Scan(fields...); err != nil {
 			log.Printf("rows scan:%v",err)
-			//continue
-			return
+			continue
+			//return
 		}
 		row := make(map[string]string) //every on line
 		for k, v := range values {
 			key := columns[k]
-			row[key] = string(v)
+			row[key] = string(v) //string info
 		}
 		results[ii] = row
 		ii++
 	}
 	return
-	//for k, v := range results {
-	//	fmt.Printf("%d,%v\n",k, v)
-	//}
 }
 
 //beginOp
