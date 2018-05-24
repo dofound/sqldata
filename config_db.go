@@ -4,7 +4,7 @@ type configDb struct {
 	Addr string `toml:"addr"`
 	Retry int32 `toml:"retry"`
 	LifeTime int32 `toml:"life_time"`
-	DriverName string `toml:"driver_name`
+	DriverName string `toml:"driver_name"`
 }
 
 //addr

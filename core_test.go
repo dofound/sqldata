@@ -20,7 +20,7 @@ func TestConnect(t *testing.T) {
 		t.Fatalf("get data. [err:%v]", err)
 	}
 	datas := mytest.fetchMap(rows)
-	t.Fatalf("gat data : %v",datas)
+	t.Logf("gat data : %v",datas)
 	t.Run("get connect", func(t *testing.T) {
 		//fmt.Println("ok")
 	})
