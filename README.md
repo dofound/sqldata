@@ -2,14 +2,7 @@
 
 这个库主要是解决go读取mysql数据，统一封装了 `sql & mysql` 库的操作，这个库支持addr/driver_name客户端配置
 
-实现查询数据库操作,数据操作过程非常简单，就一句语代码：
-
-```go
-condId:=2
-datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",condId)
-```
-
-datas的结果是一个二维的map,尽量让他长得像php返回的样子， 他的结果是这样的：:
+实现查询数据库操作,数据操作过程非常简单，先看表结构：
 
 ```go
 CREATE TABLE `infos` (
@@ -19,8 +12,19 @@ CREATE TABLE `infos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
 
-//上面的datas返回值 可以这样取出来：
+```
 
+编写go代码：
+
+```go
+condId:=2
+datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",condId)
+```
+
+datas的结果是一个二维的map,尽量让他长得像php调用mysql返回的样子， 他的结果取值很方便 如下所示:
+
+```go
+//上面的datas返回值 可以这样取出来：
 datas[0]["id"], datas[0]["age"], datas[0]["name"] 
 datas[1]["id"], datas[1]["age"], datas[2]["name"] 
 ```
