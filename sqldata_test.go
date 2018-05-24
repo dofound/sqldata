@@ -5,6 +5,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"flag"
 	"context"
+	"fmt"
 )
 
 func TestMysqlFetchMap(t *testing.T) {

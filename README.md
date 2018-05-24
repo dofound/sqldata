@@ -2,7 +2,7 @@
 
 这个库主要是解决go读取mysql数据，统一封装了 `sql & mysql` 库的操作，这个库支持addr/driver_name客户端配置
 
-实现查询数据库操作,数据操作过程非常简间，就一句语代码：
+实现查询数据库操作,数据操作过程非常简单，就一句语代码：
 
 ```go
 condId:=2
@@ -45,12 +45,10 @@ sqlHand := newSql.New(ctx)
 
 datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos limit 3")
 if err!=nil {
-    t.Fatalf("get data. [err:%v]", err)
+    fmt.Printf("get data. [err:%v]", err)
 }
-t.Logf("gat data : %v",datas)
-t.Run("get connect", func(t *testing.T) {
-    //fmt.Println("ok")
-})
+fmt.Printf("gat data : %v",datas)
+
 
 ```
 
