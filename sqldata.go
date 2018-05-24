@@ -20,6 +20,12 @@ type implSqlData struct{
 	conndb *connDb
 }
 
+//
+func (sd *implSqlData)GetDb()(db *connDb) {
+	db = sd.conndb
+	return
+}
+
 //FetchMap
 func (sd *implSqlData)MysqlFetchMap(sql string,args ...interface{}) (data ResultData,err error) {
 	conDatabase := sd.conndb

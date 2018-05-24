@@ -42,13 +42,64 @@ func (cn *connDb)connect() (db *sql.DB,err error) {
 }
 
 //GetConnDb
-func (cn *connDb)GetConnDb() (db *sql.DB){
+func (cn *connDb)getConnDb() (db *sql.DB){
 	db = cn.coreDb
 	return
 }
 
+//begin
+func (cn *connDb)begin() (btx *sql.Tx,err error) {
+	btx,err = cn.coreDb.Begin()
+	return
+}
+
+//commit
+func (cn *connDb)commit(btx *sql.Tx) error {
+	return btx.Commit()
+}
+
+//rollback
+func (cn *connDb)rollback(btx *sql.Tx) error {
+	return btx.Rollback()
+}
+
+//prepare
+func (cn *connDb)prepare(query string) (stmt *sql.Stmt,err error) {
+	stmt,err = cn.coreDb.Prepare(query)
+	return
+}
+
+//execFrStmt
+func (cn *connDb)execFromStmt(stmt *sql.Stmt,args ...interface{})(rs sql.Result,sterr error) {
+	rs,sterr = stmt.Exec(args)
+	return
+}
+
+//execTx
+func (cn *connDb)execFromTx(btx *sql.Tx,query string, args ...interface{})(rs sql.Result,exerr error) {
+	rs,exerr = btx.Exec(query, args)
+	return
+}
+
+//exec
+func (cn *connDb)execFromDb(query string, args ...interface{})(result sql.Result,err error) {
+	result,err = cn.coreDb.Exec(query, args)
+	return
+}
+
+//getLastId
+func (cn *connDb)getLastId(result sql.Result) (num int64,err error) {
+	num,err = result.LastInsertId()
+	return
+}
+
+//rowsAffected
+func (cn *connDb)rowsAffected(result sql.Result) (num int64,err error) {
+	num,err = result.RowsAffected()
+	return
+}
+
 //results 组装sql信息，对信息进行处理
-//
 func (cn *connDb)query(ctx context.Context,query string, args...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.QueryContext(ctx,query,args...)
 	if err!=nil {
@@ -85,7 +136,3 @@ func (cn *connDb)fetchMap(rows *sql.Rows) (results ResultData) {
 	return
 }
 
-//beginOp
-func (cn *connDb) beginOp() {
-
-}
