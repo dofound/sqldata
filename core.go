@@ -49,7 +49,7 @@ func (cn *connDb)GetConnDb() (db *sql.DB){
 
 //results 组装sql信息，对信息进行处理
 //
-func (cn *connDb)results(ctx context.Context,query string, args...interface{}) (rows *sql.Rows,err error){
+func (cn *connDb)query(ctx context.Context,query string, args...interface{}) (rows *sql.Rows,err error){
 	rows,err = cn.coreDb.QueryContext(ctx,query,args...)
 	if err!=nil {
 		log.Printf("sql:%v,result:%v",query,err)

@@ -11,7 +11,7 @@ type ResultData map[int]map[string]string
 //SqlData
 type SqlData interface {
 	// fetch data information
-	FetchMap(sql string,args ...interface{}) (data ResultData,err error)
+	MysqlFetchMap(sql string,args ...interface{}) (data ResultData,err error)
 }
 
 //implSqlData
@@ -21,9 +21,9 @@ type implSqlData struct{
 }
 
 //FetchMap
-func (sd *implSqlData)FetchMap(sql string,args ...interface{}) (data ResultData,err error) {
+func (sd *implSqlData)MysqlFetchMap(sql string,args ...interface{}) (data ResultData,err error) {
 	conDatabase := sd.conndb
-	resultRows,err := conDatabase.results(sd.ctx,sql,args...)
+	resultRows,err := conDatabase.query(sd.ctx,sql,args...)
 	if err!=nil {
 		log.Fatalf("fetchquery fail")
 	}

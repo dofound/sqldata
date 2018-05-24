@@ -7,7 +7,7 @@ import (
 	"context"
 )
 
-func TestFetchMap(t *testing.T) {
+func TestMysqlFetchMap(t *testing.T) {
 
 	var sysconfig Config
 	var configPath string
@@ -19,17 +19,15 @@ func TestFetchMap(t *testing.T) {
 	if _, err := toml.DecodeFile(configPath, &sysconfig); err != nil {
 		t.Fatalf("decode err:%v", err)
 	}
-
-	mytest,err := newConnDb(&sysconfig.Db)
-	if err!=nil {
-		t.Fatalf("fail to connect. [err:%v]", err)
-	}
+	newSql := NewFactory(&sysconfig)
 	ctx:=context.Background()
-	rows,err := mytest.results(ctx,"SELECT * FROM infos limit 3")
+	sqlHand := newSql.New(ctx)
+
+	condition:=2
+	datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",condition)
 	if err!=nil {
 		t.Fatalf("get data. [err:%v]", err)
 	}
-	datas := mytest.fetchMap(rows)
 	t.Logf("gat data : %v",datas)
 	t.Run("get connect", func(t *testing.T) {
 		//fmt.Println("ok")

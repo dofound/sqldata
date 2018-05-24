@@ -17,7 +17,7 @@ func TestConnect(t *testing.T) {
 		t.Fatalf("fail to connect. [err:%v]", err)
 	}
 	ctx := context.Background()
-	rows,err := mytest.results(ctx,"SELECT * FROM infos limit 3")
+	rows,err := mytest.query(ctx,"SELECT * FROM infos limit 3")
 	if err!=nil {
 		t.Fatalf("get data. [err:%v]", err)
 	}
