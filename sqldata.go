@@ -23,7 +23,7 @@ type implSqlData struct{
 //FetchMap
 func (sd *implSqlData)FetchMap(sql string,args ...interface{}) (data ResultData,err error) {
 	conDatabase := sd.conndb
-	resultRows,err := conDatabase.results(sql,args...)
+	resultRows,err := conDatabase.results(sd.ctx,sql,args...)
 	if err!=nil {
 		log.Fatalf("fetchquery fail")
 	}

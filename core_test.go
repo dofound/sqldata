@@ -2,6 +2,7 @@ package sqldata
 
 import (
 	"testing"
+	"context"
 )
 
 func TestConnect(t *testing.T) {
@@ -15,7 +16,8 @@ func TestConnect(t *testing.T) {
 	if err!=nil {
 		t.Fatalf("fail to connect. [err:%v]", err)
 	}
-	rows,err := mytest.results("SELECT * FROM infos limit 3")
+	ctx := context.Background()
+	rows,err := mytest.results(ctx,"SELECT * FROM infos limit 3")
 	if err!=nil {
 		t.Fatalf("get data. [err:%v]", err)
 	}
