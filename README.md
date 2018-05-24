@@ -25,32 +25,32 @@ driver_name="mysql"
 ```
 
 
- 其次：新建文件 `client/email.go` 编写代码如下：
+ 其次：新建文件 `op.go`，获取某个表里的数据，编写代码如下：
 
 ```go
 
-	var sysconfig Config
-	var configPath string
-	flag.StringVar(&configPath, "config", "my.conf", "server config.")
-	flag.Parse()
+var sysconfig Config
+var configPath string
+flag.StringVar(&configPath, "config", "my.conf", "server config.")
+flag.Parse()
 
-	configPath = "my.conf"
+configPath = "my.conf"
 
-	if _, err := toml.DecodeFile(configPath, &sysconfig); err != nil {
-		t.Fatalf("decode err:%v", err)
-	}
-	newSql := NewFactory(&sysconfig)
-	ctx:=context.Background()
-	sqlHand := newSql.New(ctx)
+if _, err := toml.DecodeFile(configPath, &sysconfig); err != nil {
+    t.Fatalf("decode err:%v", err)
+}
+newSql := NewFactory(&sysconfig)
+ctx:=context.Background()
+sqlHand := newSql.New(ctx)
 
-	datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos limit 3")
-	if err!=nil {
-		t.Fatalf("get data. [err:%v]", err)
-	}
-	t.Logf("gat data : %v",datas)
-	t.Run("get connect", func(t *testing.T) {
-		//fmt.Println("ok")
-	})
+datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos limit 3")
+if err!=nil {
+    t.Fatalf("get data. [err:%v]", err)
+}
+t.Logf("gat data : %v",datas)
+t.Run("get connect", func(t *testing.T) {
+    //fmt.Println("ok")
+})
 
 ```
 
