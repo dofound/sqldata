@@ -5,7 +5,6 @@ import (
 	"github.com/BurntSushi/toml"
 	"flag"
 	"context"
-	"fmt"
 )
 
 func TestMysqlFetchMap(t *testing.T) {
@@ -28,6 +27,9 @@ func TestMysqlFetchMap(t *testing.T) {
 	datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",condition)
 	if err!=nil {
 		t.Fatalf("get data. [err:%v]", err)
+	}
+	for pkey,val:=range datas{
+		t.Log("%v,%v",pkey,val)
 	}
 	t.Logf("gat data : %v",datas)
 	t.Run("get connect", func(t *testing.T) {

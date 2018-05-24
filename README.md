@@ -9,13 +9,28 @@ condId:=2
 datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",condId)
 ```
 
+datas的结果是一个二维的map,尽量让他长得像php返回的样子， 他的结果是这样的：:
+
+```go
+CREATE TABLE `infos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `age` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+
+//上面的datas返回值 可以这样取出来：
+
+datas[0]["id"], datas[0]["age"], datas[0]["name"] 
+datas[1]["id"], datas[1]["age"], datas[2]["name"] 
+```
 
 接口文档：[sqldata]()
   
 
 # 客户端使用 conf  #
 
- 首先：客户端设置配置文件， 在`my.conf`里添加 如下信息：
+ 首先：客户端设置配置文件， 新建`my.conf`文件，添加代码 如下：
  
 ```go 
 [database]
@@ -52,6 +67,6 @@ fmt.Printf("gat data : %v",datas)
 
 ```
 
- 最后：建议 把db 做成一个单例的factory 来操作。
+ 最后：建议 把 sqlHand 做成一个单例的factory 来操作。
  
  
