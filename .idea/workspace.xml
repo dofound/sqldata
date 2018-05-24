@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28d18c21-a7c2-48ae-be52-4e4e15522ab9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core.go" afterPath="$PROJECT_DIR$/core.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core_test.go" afterPath="$PROJECT_DIR$/core_test.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqldata.go" afterPath="$PROJECT_DIR$/sqldata.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqldata_test.go" afterPath="$PROJECT_DIR$/sqldata_test.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="sqldata.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -131,8 +128,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor vertical-scroll-proportion="0.5661765">
-                <caret line="45" column="60" selection-start-line="45" selection-start-column="60" selection-end-line="45" selection-end-column="60" />
+              <first_editor vertical-scroll-proportion="0.10294118">
+                <caret line="2" column="64" selection-start-line="2" selection-start-column="64" selection-end-line="2" selection-end-column="64" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -802,8 +799,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.5661765">
-            <caret line="45" column="60" selection-start-line="45" selection-start-column="60" selection-end-line="45" selection-end-column="60" />
+          <first_editor vertical-scroll-proportion="0.10294118">
+            <caret line="2" column="64" selection-start-line="2" selection-start-column="64" selection-end-line="2" selection-end-column="64" />
             <folding />
           </first_editor>
           <second_editor />

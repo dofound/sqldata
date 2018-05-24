@@ -1,8 +1,8 @@
 # sqldata：mysql数据库操作  #
 
-这个库主要是解决获取mysql数据，统一封装了 `sql & mysql` 库的操作，这个库支持host/bid/source客户端配置，实现查询数据库操作。
-  
-数据操作过程非常简间，就一条代码：
+这个库主要是解决获取mysql数据，统一封装了 `sql & mysql` 库的操作，这个库支持addr/driver_name客户端配置
+
+实现查询数据库操作,数据操作过程非常简间，就一句语代码：
 
 ```go
 condId:=2
