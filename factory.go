@@ -4,26 +4,26 @@ import "context"
 
 //Factory
 type Factory struct {
-	db configDb `toml:"database"`
+	db   configDb `toml:"database"`
 	mock SqlData
 }
 
 //NewFactory
 func NewFactory(config *Config) *Factory {
 	return &Factory{
-		db:config.Db,
+		db: config.Db,
 	}
 }
 
 //New
-func (f *Factory)New(ctx context.Context) (re SqlData) {
-	if f.mock!=nil {
+func (f *Factory) New(ctx context.Context) (re SqlData) {
+	if f.mock != nil {
 		re = f.mock
 	} else {
-		tmpConndb,_:=newConnDb(&f.db)
+		tmpConndb, _ := newConnDb(&f.db)
 		re = &implSqlData{
-			ctx:ctx,
-			conndb:tmpConndb,
+			ctx:    ctx,
+			conndb: tmpConndb,
 		}
 	}
 	return
