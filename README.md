@@ -85,10 +85,28 @@ if err != nil {
 
 
 ```go
-lastId, err := sqlHand.Insert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
+affect, err := sqlHand.PrepareOpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
+		"xiaojh12", 26)
+	if err != nil {
+		t.Fatalf("get error. [err:%v]", err)
+	}
+```
+
+ # 修改数据  #
+
+```go
+lastId, err := sqlHand.PrepareOpAffected("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
 		"肖2", 30,"肖2", 30)
 if err != nil {
     t.Fatalf("get data. [err:%v]", err)
 }
 ```
 
+
+```go
+affect, err := sqlHand.OpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
+		"xiaojh22", 22)
+if err != nil {
+    t.Fatalf("get error. [err:%v]", err)
+}
+```

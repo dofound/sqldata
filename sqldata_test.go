@@ -37,7 +37,7 @@ func TestMysqlFetchMap(t *testing.T) {
 	condition := 2
 	datas, err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?", condition)
 	if err != nil {
-		t.Fatalf("get data. [err:%v]", err)
+		t.Fatalf("get error. [err:%v]", err)
 	}
 	for pkey, val := range datas {
 		t.Log("%v,%v", pkey, val)
@@ -50,8 +50,31 @@ func TestPrepareInsert(t *testing.T) {
 	lastId, err := sqlHand.PrepareInsert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
 		"肖2", 30,"肖2", 30)
 	if err != nil {
-		t.Fatalf("get data. [err:%v]", err)
+		t.Fatalf("get error. [err:%v]", err)
 	}
 	t.Logf("PrepareInsert insert_id : %v", lastId)
+
+}
+
+func TestPrepareOpAffected(t *testing.T) {
+	initConfig()
+	affect, err := sqlHand.PrepareOpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
+		"xiaojh12", 26)
+	if err != nil {
+		t.Fatalf("get error. [err:%v]", err)
+	}
+	t.Logf("PrepareOpAffected op : %v", affect)
+
+}
+
+
+func TestOpAffected(t *testing.T) {
+	initConfig()
+	affect, err := sqlHand.OpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
+		"xiaojh22", 22)
+	if err != nil {
+		t.Fatalf("get error. [err:%v]", err)
+	}
+	t.Logf("OpAffected op : %v", affect)
 
 }
