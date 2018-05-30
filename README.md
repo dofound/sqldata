@@ -116,6 +116,10 @@ if err != nil {
 }
 ```
 
+# 事务处理数据  #
+
+waiting..*[]: 
+
 
 最后：建议 把 `sqlHand` 做成一个`单例的factory` 来操作。
 
