@@ -75,6 +75,8 @@ fmt.Printf("gat data : %v",datas)
  
  # 插入数据  #
 
+批量建议：
+
 ```go
 lastId, err := sqlHand.PrepareInsert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
 		"肖2", 30,"肖2", 30)
@@ -83,22 +85,23 @@ if err != nil {
 }
 ```
 
+单记录插入：
 
 ```go
-affect, err := sqlHand.PrepareOpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
-		"xiaojh12", 26)
-	if err != nil {
-		t.Fatalf("get error. [err:%v]", err)
-	}
+lastId, err := sqlHand.Insert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
+		"肖2", 30,"肖2", 30)
+if err != nil {
+    t.Fatalf("get data. [err:%v]", err)
+}
 ```
 
  # 修改数据  #
 
 ```go
-lastId, err := sqlHand.PrepareOpAffected("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
-		"肖2", 30,"肖2", 30)
+affect, err := sqlHand.PrepareOpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
+		"xiaojh12", 26)
 if err != nil {
-    t.Fatalf("get data. [err:%v]", err)
+    t.Fatalf("get error. [err:%v]", err)
 }
 ```
 
