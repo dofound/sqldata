@@ -45,11 +45,11 @@ func TestPrepare(t *testing.T) {
 	if err != nil {
 		t.Fatalf("prepare. [err:%v]", err)
 	}
-	result, err := mytest.execFromStmt(stmt, "肖2", 30,"肖2", 30)
+	result, err := mytest.execFromStmt(stmt, "肖2", 30, "肖2", 30)
 	if err != nil {
 		t.Fatalf("execFromStmt . [err:%v]", err)
 	}
-	id,_ := result.LastInsertId()
-	t.Logf("insert id:%v",id)
+	id, _ := result.LastInsertId()
+	t.Logf("insert id:%v", id)
 
 }

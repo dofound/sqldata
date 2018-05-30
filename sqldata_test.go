@@ -13,7 +13,7 @@ func initConfig() {}
 
 func TestInitConfig(t *testing.T) {
 
-	if sqlHand==nil {
+	if sqlHand == nil {
 		var sysconfig Config
 		var configPath string
 		flag.StringVar(&configPath, "config", "my.conf", "server config.")
@@ -48,7 +48,7 @@ func TestMysqlFetchMap(t *testing.T) {
 func TestPrepareInsert(t *testing.T) {
 	initConfig()
 	lastId, err := sqlHand.PrepareInsert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
-		"肖2", 30,"肖2", 30)
+		"肖2", 30, "肖2", 30)
 	if err != nil {
 		t.Fatalf("get error. [err:%v]", err)
 	}
@@ -66,7 +66,6 @@ func TestPrepareOpAffected(t *testing.T) {
 	t.Logf("PrepareOpAffected op : %v", affect)
 
 }
-
 
 func TestOpAffected(t *testing.T) {
 	initConfig()
