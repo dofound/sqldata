@@ -45,15 +45,11 @@ func TestPrepare(t *testing.T) {
 	if err != nil {
 		t.Fatalf("prepare. [err:%v]", err)
 	}
-	result, err := mytest.execFromStmt(stmt, "肖2", 30, "肖3", 50)
-	//result,err:= stmt.Exec("肖2",30)
+	result, err := mytest.execFromStmt(stmt, "肖2", 30,"肖2", 30)
 	if err != nil {
 		t.Fatalf("execFromStmt . [err:%v]", err)
 	}
-
-	t.Log(result.LastInsertId())
-	t.Run("get connect", func(t *testing.T) {
-		//fmt.Println("ok")
-	})
+	id,_ := result.LastInsertId()
+	t.Logf("insert id:%v",id)
 
 }
