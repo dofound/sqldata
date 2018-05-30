@@ -32,7 +32,7 @@ datas[1]["id"], datas[1]["age"], datas[2]["name"]
 接口文档：[sqldata]()
   
 
-# 客户端使用 conf  #
+# 读取数据.客户端  #
 
  首先：客户端设置配置文件， 新建`my.conf`文件，添加代码 如下：
  
