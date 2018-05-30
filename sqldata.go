@@ -6,12 +6,12 @@ import (
 )
 
 //ResultData
-type ResultData map[int]map[string]string
+type resultData map[int]map[string]string
 
 //SqlData
 type SqlData interface {
 	// fetch data information
-	MysqlFetchMap(sql string, args ...interface{}) (data ResultData, err error)
+	MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error)
 	// insert data information
 	PrepareInsert(sql string, args ...interface{}) (lastId int64, err error)
 	// op database information
@@ -35,7 +35,7 @@ func (sd *implSqlData) GetDb() (db *connDb) {
 }
 
 //MysqlFetchMap
-func (sd *implSqlData) MysqlFetchMap(sql string, args ...interface{}) (data ResultData, err error) {
+func (sd *implSqlData) MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error) {
 	conDatabase := sd.conndb
 	resultRows, err := conDatabase.query(sd.ctx, sql, args...)
 	if err != nil {

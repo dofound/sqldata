@@ -73,4 +73,13 @@ fmt.Printf("gat data : %v",datas)
 
  最后：建议 把 sqlHand 做成一个单例的factory 来操作。
  
- 
+ # 插入数据  #
+
+```go
+lastId, err := sqlHand.PrepareInsert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
+		"肖2", 30,"肖2", 30)
+if err != nil {
+    t.Fatalf("get data. [err:%v]", err)
+}
+```
+

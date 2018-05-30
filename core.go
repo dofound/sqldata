@@ -115,7 +115,7 @@ func (cn *connDb) query(ctx context.Context, query string, args ...interface{}) 
 
 //fetchMap 获取数据，对数据进行转化成map
 //返回的数据是对 数据表字段为key
-func (cn *connDb) fetchMap(rows *sql.Rows) (results ResultData) {
+func (cn *connDb) fetchMap(rows *sql.Rows) (results resultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
 	fields := make([]interface{}, len(columns))
