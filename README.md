@@ -61,7 +61,11 @@ if _, err := toml.DecodeFile(configPath, &sysconfig); err != nil {
 newSql := NewFactory(&sysconfig)
 ctx:=context.Background()
 sqlHand := newSql.New(ctx)
+```
 
+读取数据
+
+```go
 datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos limit 3")
 if err!=nil {
     fmt.Printf("get data. [err:%v]", err)
@@ -70,8 +74,6 @@ fmt.Printf("gat data : %v",datas)
 
 
 ```
-
- 最后：建议 把 sqlHand 做成一个单例的factory 来操作。
  
  # 插入数据  #
 
@@ -113,3 +115,9 @@ if err != nil {
     t.Fatalf("get error. [err:%v]", err)
 }
 ```
+
+
+最后：建议 把 `sqlHand` 做成一个`单例的factory` 来操作。
+
+
+欢迎提意见。thanks.
