@@ -83,3 +83,12 @@ if err != nil {
 }
 ```
 
+
+```go
+lastId, err := sqlHand.Insert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
+		"肖2", 30,"肖2", 30)
+if err != nil {
+    t.Fatalf("get data. [err:%v]", err)
+}
+```
+
