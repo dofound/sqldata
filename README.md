@@ -124,4 +124,8 @@ waiting..*[]:
 最后：建议 把 `sqlHand` 做成一个`单例的factory` 来操作。
 
 
-欢迎提意见。thanks.
+欢迎提意见.
+
+要是真的感觉不错，给个star. 
+
+Thanks.
