@@ -66,7 +66,7 @@ sqlHand := newSql.New(ctx)
 读取数据
 
 ```go
-datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos limit 3")
+datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where age=? limit 3",30)
 if err!=nil {
     fmt.Printf("get data. [err:%v]", err)
 }
