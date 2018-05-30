@@ -71,19 +71,19 @@ func (cn *connDb)prepare(query string) (stmt *sql.Stmt,err error) {
 
 //execFrStmt
 func (cn *connDb)execFromStmt(stmt *sql.Stmt,args ...interface{})(rs sql.Result,sterr error) {
-	rs,sterr = stmt.Exec(args)
+	rs,sterr = stmt.Exec(args...)
 	return
 }
 
 //execTx
 func (cn *connDb)execFromTx(btx *sql.Tx,query string, args ...interface{})(rs sql.Result,exerr error) {
-	rs,exerr = btx.Exec(query, args)
+	rs,exerr = btx.Exec(query, args...)
 	return
 }
 
 //exec
 func (cn *connDb)execFromDb(query string, args ...interface{})(result sql.Result,err error) {
-	result,err = cn.coreDb.Exec(query, args)
+	result,err = cn.coreDb.Exec(query, args...)
 	return
 }
 
@@ -97,6 +97,11 @@ func (cn *connDb)getLastId(result sql.Result) (num int64,err error) {
 func (cn *connDb)rowsAffected(result sql.Result) (num int64,err error) {
 	num,err = result.RowsAffected()
 	return
+}
+
+//close
+func (cn *connDb)close() error{
+	return cn.coreDb.Close()
 }
 
 //results 组装sql信息，对信息进行处理
