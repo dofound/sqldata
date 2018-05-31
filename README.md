@@ -2,6 +2,13 @@
 
 这个库主要是解决go读取mysql数据，统一封装了 `sql & mysql` 库的操作，这个库支持addr/driver_name客户端配置
 
+主要依靠外库,需安装：
+```go
+go get github.com/go-sql-driver/mysql
+go get github.com/BurntSushi/toml
+
+```
+
 实现查询数据库操作,数据操作过程非常简单，先看表结构：
 
 ```go
