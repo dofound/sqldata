@@ -121,7 +121,7 @@ func (cn *connDb) query(ctx context.Context, query string, args ...interface{}) 
 
 //fetchMap reset new datas,become to map type
 //return data the same array
-func (cn *connDb) fetchMap(rows *sql.Rows) (results resultData) {
+func (cn *connDb) rowsMap(rows *sql.Rows) (results resultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
 	fields := make([]interface{}, len(columns))

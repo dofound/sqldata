@@ -51,7 +51,7 @@ func (sd *implSQLData) MysqlFetchMap(sql string, args ...interface{}) (data resu
 	if err != nil {
 		log.Fatal("sqldata_MysqlFetchMap||sql=%s||err=%v", sql, err)
 	}
-	data = conDatabase.fetchMap(resultRows)
+	data = conDatabase.rowsMap(resultRows)
 	return
 }
 

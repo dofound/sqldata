@@ -21,7 +21,7 @@ func TestConnect(t *testing.T) {
 	if err != nil {
 		t.Fatalf("get data. [err:%v]", err)
 	}
-	datas := mytest.fetchMap(rows)
+	datas := mytest.rowsMap(rows)
 	t.Logf("gat data : %v", datas)
 	t.Run("get connect", func(t *testing.T) {
 		//fmt.Println("ok")
