@@ -87,7 +87,7 @@ Batch proposal：
 
 ```go
 lastId, err := sqlHand.PrepareInsert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
-		"肖2", 30,"肖2", 30)
+		"xiaojianhe2", 28,"xiaojianhe3", 30)
 if err != nil {
     t.Fatalf("get data. [err:%v]", err)
 }
@@ -97,7 +97,7 @@ Single record insertion：
 
 ```go
 lastId, err := sqlHand.Insert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?)",
-		"肖2", 30)
+		"xiaojh4", 30)
 if err != nil {
     t.Fatalf("get data. [err:%v]", err)
 }
@@ -127,7 +127,10 @@ if err != nil {
 waiting..*[]: 
 
 
-Finally, it is suggested that `sqlHand` be made into `a single example factory`.
+
+# Finally  #
+
+It is suggested that `sqlHand` be made into `a single example factory`.
 
 
 Comments are welcome..
