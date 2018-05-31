@@ -3,6 +3,7 @@ package sqldata
 import (
 	"context"
 	"log"
+	"database/sql"
 )
 
 //ResultData is map setting
@@ -11,6 +12,8 @@ type resultData map[int]map[string]string
 //SQLData interface set
 //Define the development method, which will provide better service.
 type SQLData interface {
+	// Gets native objects, supports access to existing SQL methods
+	GetDb() (db *sql.DB)
 	// fetch data information
 	MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error)
 	// insert data information
@@ -29,9 +32,12 @@ type implSQLData struct {
 	conndb *connDb         //db object
 }
 
-//GetDb get
-func (sd *implSQLData) GetDb() (db *connDb) {
-	db = sd.conndb
+//GetDb get CoreDb
+func (sd *implSQLData) GetDb() (db *sql.DB) {
+	if sd.conndb==nil {
+		log.Fatal("sqldata_GetDb||db is null")
+	}
+	db = sd.conndb.coreDb
 	return
 }
 

@@ -80,10 +80,12 @@ func TestOpAffected(t *testing.T) {
 
 func TestGetDb(t *testing.T) {
 	initConfig()
-	//affect, err := sqlHand
-	//if err != nil {
-	//	t.Fatalf("get error. [err:%v]", err)
-	//}
-	//t.Logf("OpAffected op : %v", affect)
+	row := sqlHand.GetDb().QueryRow("SELECT name FROM infos where id=?", 2)
+	var name string
+	err :=row.Scan(&name)
+	if err != nil {
+		t.Fatalf("get error. [err:%v]", err)
+	}
+	t.Logf("TestGetDb op : %v", name)
 
 }
