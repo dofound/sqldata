@@ -30,6 +30,7 @@ type SQLData interface {
 type implSQLData struct {
 	ctx    context.Context //ctx from config
 	conndb *connDb         //db object
+	btx *sql.Tx
 }
 
 //GetDb get CoreDb
@@ -100,4 +101,50 @@ func (sd *implSQLData) OpAffected(sql string, args ...interface{}) (affectedID i
 	}
 	affectedID, _ = result.RowsAffected()
 	return
+}
+
+//Begin
+func (sd *implSQLData) Begin() (err error) {
+	sd.btx, err = sd.conndb.begin()
+	if err!=nil {
+		log.Fatal("sqldata_Begin||err=%v", err)
+	}
+	return
+}
+//TxPrepare
+func (sd *implSQLData) TxPrepare(query string)(stmt *sql.Stmt, err error) {
+	btx:=sd.btx
+	stmt,err = sd.conndb.txPrepare(btx,query)
+	return
+}
+
+//TxExec
+func (sd *implSQLData) TxExec(stmt *sql.Stmt,args ...interface{})(rs sql.Result, sterr error) {
+	rs,sterr = sd.conndb.execFromStmt(stmt,args...)
+	return
+}
+
+//Commit
+func (sd *implSQLData) Commit()(err error) {
+	btx:=sd.btx
+	err = sd.conndb.commit(btx)
+	if err==nil {
+		sd.closeTx()
+	}
+	return
+}
+
+//Rollback
+func (sd *implSQLData) Rollback()(err error)  {
+	btx:=sd.btx
+	err = sd.conndb.rollback(btx)
+	if err==nil {
+		sd.closeTx()
+	}
+	return
+}
+
+//closeTx
+func (sd *implSQLData) closeTx() {
+	sd.btx=nil
 }
