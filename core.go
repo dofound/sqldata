@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-//connDb
+//connDb  connect db information
 type connDb struct {
 	dns        string
 	retry      int32
@@ -15,7 +15,7 @@ type connDb struct {
 	coreDb     *sql.DB
 }
 
-//newConnDb
+//newConnDb star create a db driver
 func newConnDb(conf *configDb) (re *connDb, err error) {
 	re = &connDb{
 		dns:        conf.Addr,
@@ -26,39 +26,39 @@ func newConnDb(conf *configDb) (re *connDb, err error) {
 	return
 }
 
-//connect
+//connect open the driver
 func (cn *connDb) connect() (db *sql.DB, err error) {
 	if cn.coreDb != nil {
 		return cn.coreDb, nil
+	}
+
+	db, err = sql.Open(cn.driverName, cn.dns)
+	if err != nil {
+		log.Fatalf("connect fail;%v", err)
 	} else {
-		db, err = sql.Open(cn.driverName, cn.dns)
-		if err != nil {
-			log.Fatalf("connect fail;%v", err)
-		} else {
-			cn.coreDb = db
-		}
+		cn.coreDb = db
 	}
 	return
 }
 
-//GetConnDb
+//GetConnDb get the DB infors
 func (cn *connDb) getConnDb() (db *sql.DB) {
 	db = cn.coreDb
 	return
 }
 
-//begin
+//begin db trans start
 func (cn *connDb) begin() (btx *sql.Tx, err error) {
 	btx, err = cn.coreDb.Begin()
 	return
 }
 
-//commit
+//commit db trans commit
 func (cn *connDb) commit(btx *sql.Tx) error {
 	return btx.Commit()
 }
 
-//rollback
+//rollback db trans reset
 func (cn *connDb) rollback(btx *sql.Tx) error {
 	return btx.Rollback()
 }
@@ -69,42 +69,42 @@ func (cn *connDb) prepare(query string) (stmt *sql.Stmt, err error) {
 	return
 }
 
-//execFrStmt
+//execFrStmt  operate by exec from stmt
 func (cn *connDb) execFromStmt(stmt *sql.Stmt, args ...interface{}) (rs sql.Result, sterr error) {
 	rs, sterr = stmt.Exec(args...)
 	return
 }
 
-//execTx
+//execTx operate by exec from tx
 func (cn *connDb) execFromTx(btx *sql.Tx, query string, args ...interface{}) (rs sql.Result, exerr error) {
 	rs, exerr = btx.Exec(query, args...)
 	return
 }
 
-//exec
+//exec operate by exec from db,a normal op
 func (cn *connDb) execFromDb(query string, args ...interface{}) (result sql.Result, err error) {
 	result, err = cn.coreDb.Exec(query, args...)
 	return
 }
 
-//getLastId
-func (cn *connDb) getLastId(result sql.Result) (num int64, err error) {
+//getLastId get the result last id
+func (cn *connDb) getLastID(result sql.Result) (num int64, err error) {
 	num, err = result.LastInsertId()
 	return
 }
 
-//rowsAffected
+//rowsAffected result is ok or fail
 func (cn *connDb) rowsAffected(result sql.Result) (num int64, err error) {
 	num, err = result.RowsAffected()
 	return
 }
 
-//close
+//close close db
 func (cn *connDb) close() error {
 	return cn.coreDb.Close()
 }
 
-//results 组装sql信息，对信息进行处理
+//results from sql and args,get the datas
 func (cn *connDb) query(ctx context.Context, query string, args ...interface{}) (rows *sql.Rows, err error) {
 	rows, err = cn.coreDb.QueryContext(ctx, query, args...)
 	if err != nil {
@@ -113,8 +113,8 @@ func (cn *connDb) query(ctx context.Context, query string, args ...interface{}) 
 	return
 }
 
-//fetchMap 获取数据，对数据进行转化成map
-//返回的数据是对 数据表字段为key
+//fetchMap reset new datas,become to map type
+//return data the same array
 func (cn *connDb) fetchMap(rows *sql.Rows) (results resultData) {
 	columns, _ := rows.Columns()
 	values := make([][]byte, len(columns)) //make a byte slice
@@ -126,7 +126,7 @@ func (cn *connDb) fetchMap(rows *sql.Rows) (results resultData) {
 	var ii int
 	for rows.Next() {
 		if err := rows.Scan(fields...); err != nil {
-			log.Printf("rows scan:%v", err)
+			log.Fatal("sqldata_fetchMap||err=%v", err)
 			continue
 			//return
 		}

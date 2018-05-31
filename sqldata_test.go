@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var sqlHand SqlData
+var sqlHand SQLData
 
 func initConfig() {}
 
@@ -75,5 +75,15 @@ func TestOpAffected(t *testing.T) {
 		t.Fatalf("get error. [err:%v]", err)
 	}
 	t.Logf("OpAffected op : %v", affect)
+
+}
+
+func TestGetDb(t *testing.T) {
+	initConfig()
+	//affect, err := sqlHand
+	//if err != nil {
+	//	t.Fatalf("get error. [err:%v]", err)
+	//}
+	//t.Logf("OpAffected op : %v", affect)
 
 }

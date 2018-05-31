@@ -2,26 +2,26 @@ package sqldata
 
 import "context"
 
-//Factory
+//Factory define factory config
 type Factory struct {
 	db   configDb `toml:"database"`
-	mock SqlData
+	mock SQLData
 }
 
-//NewFactory
+//NewFactory factory
 func NewFactory(config *Config) *Factory {
 	return &Factory{
 		db: config.Db,
 	}
 }
 
-//New
-func (f *Factory) New(ctx context.Context) (re SqlData) {
+//New new implSqlData
+func (f *Factory) New(ctx context.Context) (re SQLData) {
 	if f.mock != nil {
 		re = f.mock
 	} else {
 		tmpConndb, _ := newConnDb(&f.db)
-		re = &implSqlData{
+		re = &implSQLData{
 			ctx:    ctx,
 			conndb: tmpConndb,
 		}
@@ -29,17 +29,17 @@ func (f *Factory) New(ctx context.Context) (re SqlData) {
 	return
 }
 
-//SetMock 设置mock
-func (f *Factory) SetMock(mock SqlData) {
+//SetMock set mock
+func (f *Factory) SetMock(mock SQLData) {
 	f.mock = mock
 }
 
-//ResetMock 重置mock
+//ResetMock set mock
 func (f *Factory) ResetMock() {
 	f.SetMock(nil)
 }
 
-//Ping 检查参数
+//Ping check
 func (f *Factory) Ping() (err error) {
 	return
 }

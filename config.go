@@ -1,6 +1,6 @@
 package sqldata
 
-//Config
+//Config set db config
 type Config struct {
 	Db configDb `toml:"database"`
 }

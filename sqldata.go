@@ -5,37 +5,39 @@ import (
 	"log"
 )
 
-//ResultData
+//ResultData is map setting
 type resultData map[int]map[string]string
 
-//SqlData
-type SqlData interface {
+//SQLData interface set
+//Define the development method, which will provide better service.
+type SQLData interface {
 	// fetch data information
 	MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error)
 	// insert data information
-	PrepareInsert(sql string, args ...interface{}) (lastId int64, err error)
+	PrepareInsert(sql string, args ...interface{}) (lastID int64, err error)
 	// op database information
-	PrepareOpAffected(sql string, args ...interface{}) (affectedId int64, err error)
+	PrepareOpAffected(sql string, args ...interface{}) (affectedID int64, err error)
 	// Insert
-	Insert(sql string, args ...interface{}) (lastId int64, err error)
+	Insert(sql string, args ...interface{}) (lastID int64, err error)
 	// OpAffected
-	OpAffected(sql string, args ...interface{}) (affectedId int64, err error)
+	OpAffected(sql string, args ...interface{}) (affectedID int64, err error)
 }
 
-//implSqlData
-type implSqlData struct {
+//implSqlData impl information
+type implSQLData struct {
 	ctx    context.Context //ctx from config
-	conndb *connDb
+	conndb *connDb         //db object
 }
 
-//GetDb
-func (sd *implSqlData) GetDb() (db *connDb) {
+//GetDb get
+func (sd *implSQLData) GetDb() (db *connDb) {
 	db = sd.conndb
 	return
 }
 
-//MysqlFetchMap
-func (sd *implSqlData) MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error) {
+//MysqlFetchMap get the datas,He's a map format
+//The only way to get data is to return the information you want.
+func (sd *implSQLData) MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error) {
 	conDatabase := sd.conndb
 	resultRows, err := conDatabase.query(sd.ctx, sql, args...)
 	if err != nil {
@@ -45,8 +47,8 @@ func (sd *implSqlData) MysqlFetchMap(sql string, args ...interface{}) (data resu
 	return
 }
 
-//PrepareInsert
-func (sd *implSqlData) PrepareInsert(sql string, args ...interface{}) (lastId int64, err error) {
+//PrepareInsert Batch insert data
+func (sd *implSQLData) PrepareInsert(sql string, args ...interface{}) (lastID int64, err error) {
 	conDatabase := sd.conndb
 	stmt, err := conDatabase.prepare(sql)
 	defer stmt.Close()
@@ -54,12 +56,12 @@ func (sd *implSqlData) PrepareInsert(sql string, args ...interface{}) (lastId in
 	if err != nil {
 		log.Fatal("sqldata_PrepareInsert||sql=%s||err=%v", sql, err)
 	}
-	lastId, _ = result.LastInsertId()
+	lastID, _ = result.LastInsertId()
 	return
 }
 
-//PrepareOpAffected
-func (sd *implSqlData) PrepareOpAffected(sql string, args ...interface{}) (affectedId int64, err error) {
+//PrepareOpAffected Batch op data
+func (sd *implSQLData) PrepareOpAffected(sql string, args ...interface{}) (affectedID int64, err error) {
 	conDatabase := sd.conndb
 	stmt, err := conDatabase.prepare(sql)
 	defer stmt.Close()
@@ -67,28 +69,28 @@ func (sd *implSqlData) PrepareOpAffected(sql string, args ...interface{}) (affec
 	if err != nil {
 		log.Fatal("sqldata_PrepareOpAffected||sql=%s||err=%v", sql, err)
 	}
-	affectedId, _ = result.RowsAffected()
+	affectedID, _ = result.RowsAffected()
 	return
 }
 
-//PrepareInsert
-func (sd *implSqlData) Insert(sql string, args ...interface{}) (lastId int64, err error) {
+//Insert  Single insert data
+func (sd *implSQLData) Insert(sql string, args ...interface{}) (lastID int64, err error) {
 	conDatabase := sd.conndb
 	result, err := conDatabase.execFromDb(sql, args...)
 	if err != nil {
 		log.Fatal("sqldata_Insert||sql=%s||err=%v", sql, err)
 	}
-	lastId, _ = result.LastInsertId()
+	lastID, _ = result.LastInsertId()
 	return
 }
 
-//PrepareOpAffected
-func (sd *implSqlData) OpAffected(sql string, args ...interface{}) (affectedId int64, err error) {
+//OpAffected Single op data
+func (sd *implSQLData) OpAffected(sql string, args ...interface{}) (affectedID int64, err error) {
 	conDatabase := sd.conndb
 	result, err := conDatabase.execFromDb(sql, args...)
 	if err != nil {
 		log.Fatal("sqldata_OpAffected||sql=%s||err=%v", sql, err)
 	}
-	affectedId, _ = result.RowsAffected()
+	affectedID, _ = result.RowsAffected()
 	return
 }
