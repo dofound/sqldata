@@ -34,8 +34,9 @@ type implSQLData struct {
 
 //GetDb get CoreDb
 func (sd *implSQLData) GetDb() (db *sql.DB) {
-	if sd.conndb==nil {
+	if sd.conndb.coreDb==nil {
 		log.Fatal("sqldata_GetDb||db is null")
+		return nil
 	}
 	db = sd.conndb.coreDb
 	return
