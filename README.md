@@ -21,11 +21,10 @@ CREATE TABLE `infos` (
 
 ```
 
-编写go代码：
+编写go代码，仅一行代码：
 
 ```go
-condId:=2
-datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",condId)
+datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",2)
 ```
 
 datas的结果是一个二维的map,尽量让他长得像php调用mysql返回的样子， 他的结果取值很方便 如下所示:
