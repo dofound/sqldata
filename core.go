@@ -53,6 +53,12 @@ func (cn *connDb) begin() (btx *sql.Tx, err error) {
 	return
 }
 
+//txPrepare btx from begin
+func (cn *connDb) txPrepare(btx *sql.Tx,query string) (stmt *sql.Stmt, err error){
+	stmt,err = btx.Prepare(query)
+	return
+}
+
 //commit db trans commit
 func (cn *connDb) commit(btx *sql.Tx) error {
 	return btx.Commit()

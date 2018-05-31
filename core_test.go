@@ -70,12 +70,12 @@ func TestCommit(t *testing.T) {
 		t.Fatalf("====begin -> begin . [err:%v]", err)
 	}
 	//ctx := context.Background()
-	stmt, err := mytest.prepare("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)")
+	stmt, err := mytest.txPrepare(btx,"INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)")
 	defer stmt.Close()
 	if err != nil {
 		t.Fatalf("====prepare from begin. [err:%v]", err)
 	}
-	result, err := mytest.execFromStmt(stmt, "肖2", 30, "肖2", 30)
+	result, err := mytest.execFromStmt(stmt, "肖cc2", 30, "肖cc2", 30)
 	if err != nil {
 		t.Fatalf("execFromStmt . [err:%v]", err)
 	}
