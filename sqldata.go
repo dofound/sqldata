@@ -2,8 +2,8 @@ package sqldata
 
 import (
 	"context"
-	"log"
 	"database/sql"
+	"log"
 )
 
 //ResultData is map setting
@@ -30,12 +30,12 @@ type SQLData interface {
 type implSQLData struct {
 	ctx    context.Context //ctx from config
 	conndb *connDb         //db object
-	btx *sql.Tx
+	btx    *sql.Tx
 }
 
 //GetDb get CoreDb
 func (sd *implSQLData) GetDb() (db *sql.DB) {
-	if sd.conndb.coreDb==nil {
+	if sd.conndb.coreDb == nil {
 		log.Fatal("sqldata_GetDb||db is null")
 		return nil
 	}
@@ -106,39 +106,38 @@ func (sd *implSQLData) OpAffected(sql string, args ...interface{}) (affectedID i
 //Begin
 func (sd *implSQLData) Begin() (err error) {
 	sd.btx, err = sd.conndb.begin()
-	if err!=nil {
+	if err != nil {
 		log.Fatal("sqldata_Begin||err=%v", err)
 	}
 	return
 }
+
 //TxPrepare
-func (sd *implSQLData) TxPrepare(query string)(stmt *sql.Stmt, err error) {
-	btx:=sd.btx
-	stmt,err = sd.conndb.txPrepare(btx,query)
+func (sd *implSQLData) TxPrepare(query string) (stmt *sql.Stmt, err error) {
+	btx := sd.btx
+	stmt, err = sd.conndb.txPrepare(btx, query)
 	return
 }
 
 //TxExec
-func (sd *implSQLData) TxExec(stmt *sql.Stmt,args ...interface{})(rs sql.Result, sterr error) {
-	rs,sterr = sd.conndb.execFromStmt(stmt,args...)
+func (sd *implSQLData) TxExec(stmt *sql.Stmt, args ...interface{}) (rs sql.Result, sterr error) {
+	rs, sterr = sd.conndb.execFromStmt(stmt, args...)
 	return
 }
 
 //Commit
-func (sd *implSQLData) Commit()(err error) {
-	btx:=sd.btx
-	err = sd.conndb.commit(btx)
-	if err==nil {
+func (sd *implSQLData) Commit() (err error) {
+	err = sd.conndb.commit(sd.btx)
+	if err == nil {
 		sd.closeTx()
 	}
 	return
 }
 
 //Rollback
-func (sd *implSQLData) Rollback()(err error)  {
-	btx:=sd.btx
-	err = sd.conndb.rollback(btx)
-	if err==nil {
+func (sd *implSQLData) Rollback() (err error) {
+	err = sd.conndb.rollback(sd.btx)
+	if err == nil {
 		sd.closeTx()
 	}
 	return
@@ -146,5 +145,5 @@ func (sd *implSQLData) Rollback()(err error)  {
 
 //closeTx
 func (sd *implSQLData) closeTx() {
-	sd.btx=nil
+	sd.btx = nil
 }

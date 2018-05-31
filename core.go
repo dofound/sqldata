@@ -54,8 +54,8 @@ func (cn *connDb) begin() (btx *sql.Tx, err error) {
 }
 
 //txPrepare btx from begin
-func (cn *connDb) txPrepare(btx *sql.Tx,query string) (stmt *sql.Stmt, err error){
-	stmt,err = btx.Prepare(query)
+func (cn *connDb) txPrepare(btx *sql.Tx, query string) (stmt *sql.Stmt, err error) {
+	stmt, err = btx.Prepare(query)
 	return
 }
 

@@ -65,12 +65,12 @@ func TestCommit(t *testing.T) {
 	if err != nil {
 		t.Fatalf("fail to connect. [err:%v]", err)
 	}
-	btx,err := mytest.begin()
-	if err!=nil {
+	btx, err := mytest.begin()
+	if err != nil {
 		t.Fatalf("====begin -> begin . [err:%v]", err)
 	}
 	//ctx := context.Background()
-	stmt, err := mytest.txPrepare(btx,"INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)")
+	stmt, err := mytest.txPrepare(btx, "INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)")
 	defer stmt.Close()
 	if err != nil {
 		t.Fatalf("====prepare from begin. [err:%v]", err)
@@ -82,7 +82,7 @@ func TestCommit(t *testing.T) {
 	id, _ := result.LastInsertId()
 
 	err = mytest.commit(btx)
-	if err!=nil {
+	if err != nil {
 		rerr := mytest.rollback(btx)
 		t.Logf("==== rollback :%v", rerr)
 		t.Fatalf("====commit -> commit . [err:%v]", err)

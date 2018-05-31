@@ -82,7 +82,7 @@ func TestGetDb(t *testing.T) {
 	initConfig()
 	row := sqlHand.GetDb().QueryRow("SELECT name FROM infos where id=?", 2)
 	var name string
-	err :=row.Scan(&name)
+	err := row.Scan(&name)
 	if err != nil {
 		t.Fatalf("get error. [err:%v]", err)
 	}
