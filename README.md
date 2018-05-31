@@ -1,15 +1,15 @@
-# sqldata：数据库操作  #
+# sqldata：Database operation  #
 
-这个库主要是解决go读取mysql数据，统一封装了 `sql & mysql` 库的操作，这个库支持addr/driver_name客户端配置
+This library mainly solves the problem that go reads MySQL data and unify the operation of `SQL & MySQL` library, which supports `addr/driver_name` client configuration.
 
-依懒的外库需安装：
+The lazy external library needs to be installed：
 ```go
 go get github.com/go-sql-driver/mysql
 go get github.com/BurntSushi/toml
 
 ```
 
-实现查询数据库操作,数据操作过程非常简单，先看表结构：
+Query database operation, data operation process is very simple, first look at the table structure.：
 
 ```go
 CREATE TABLE `infos` (
@@ -21,26 +21,26 @@ CREATE TABLE `infos` (
 
 ```
 
-编写go代码，仅一行代码：
+Write GO code, only one line of code：
 
 ```go
 datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",2)
 ```
 
-datas的结果是一个二维的map,尽量让他长得像php调用mysql返回的样子， 他的结果取值很方便 如下所示:
+The result of datas is a two-dimensional map. Try to make him look like the PHP calls Mysql to return. The result is very convenient, as shown below.:
 
 ```go
-//上面的datas返回值 可以这样取出来：
+//The value can be taken out of this：
 datas[0]["id"], datas[0]["age"], datas[0]["name"] 
 datas[1]["id"], datas[1]["age"], datas[2]["name"] 
 ```
 
-接口文档：[sqldata]()
+Package document：[sqldata]()
   
 
-# 读取数据 #
+# Read the data #
 
- 首先：客户端设置配置文件， 新建`my.conf`文件，添加代码 如下：
+ First, the client set up the configuration file, the new `my.conf` file, and add the code as follows：
  
 ```go 
 [database]
@@ -50,7 +50,7 @@ driver_name="mysql"
 ```
 
 
- 其次：新建文件 `op.go`，获取某个表里的数据，编写代码如下：
+ Second: the new file `op.go`, get a table of data, the code is as follows：
 
 ```go
 
@@ -69,7 +69,7 @@ ctx:=context.Background()
 sqlHand := newSql.New(ctx)
 ```
 
-读取数据
+Read the data
 
 ```go
 datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where age=? limit 3",30)
@@ -81,9 +81,9 @@ fmt.Printf("gat data : %v",datas)
 
 ```
  
- # 插入数据  #
+ # Insert the data  #
 
-批量建议：
+Batch proposal：
 
 ```go
 lastId, err := sqlHand.PrepareInsert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?),(?,?)",
@@ -93,7 +93,7 @@ if err != nil {
 }
 ```
 
-单记录插入：
+Single record insertion：
 
 ```go
 lastId, err := sqlHand.Insert("INSERT INTO `infos` (`name`, `age`) VALUES (?,?)",
@@ -103,7 +103,7 @@ if err != nil {
 }
 ```
 
- # 修改数据  #
+ # Update the data  #
 
 ```go
 affect, err := sqlHand.PrepareOpAffected("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?",
@@ -122,16 +122,16 @@ if err != nil {
 }
 ```
 
-# 事务处理数据  #
+# Transaction processing data  #
 
 waiting..*[]: 
 
 
-最后：建议 把 `sqlHand` 做成一个`单例的factory` 来操作。
+Finally, it is suggested that `sqlHand` be made into `a single example factory`.
 
 
-欢迎提意见.
+Comments are welcome..
 
-要是真的感觉不错，给个star. 
+If it's really good, give a star. 
 
 Thanks.
