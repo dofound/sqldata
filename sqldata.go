@@ -24,6 +24,18 @@ type SQLData interface {
 	Insert(sql string, args ...interface{}) (lastID int64, err error)
 	// OpAffected
 	OpAffected(sql string, args ...interface{}) (affectedID int64, err error)
+
+	// Begin
+	// For database transaction, the following interfaces can be used
+	Begin() (err error)
+	// TxPrepare
+	TxPrepare(query string) (stmt *sql.Stmt, err error)
+	// TxExec
+	TxExec(stmt *sql.Stmt, args ...interface{}) (rs sql.Result, sterr error)
+	// Commit
+	Commit() (err error)
+	// Rollback
+	Rollback() (err error)
 }
 
 //implSqlData impl information
