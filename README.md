@@ -1,5 +1,7 @@
 # sqldata：Database operation  #
 
+[![Build Status](https://travis-ci.org/dofound/sqldata.svg?branch=master)](https://travis-ci.org/dofound/sqldata) [![Coverage Status](https://coveralls.io/repos/github/dofound/sqldata/badge.svg?branch=master)](https://coveralls.io/github/dofound/sqlx?branch=master) [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/dofound/sqldata) [![license](http://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/dofound/sqldata/master/LICENSE)
+
 This library mainly solves the problem that go reads MySQL data and unify the operation of `SQL & MySQL` library, which supports `addr/driver_name` client configuration.
 
 The lazy external library needs to be installed：

@@ -166,5 +166,5 @@ func (sd *implSQLData) Rollback() (err error) {
 
 //closeTx
 func (sd *implSQLData) closeTx() {
-	sd.btx = nil
+	//sd.btx.Commit()
 }
