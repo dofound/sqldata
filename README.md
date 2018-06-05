@@ -24,7 +24,7 @@ CREATE TABLE `infos` (
 Write GO code, only one line of code：
 
 ```go
-datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?",2)
+datas,err := sqlHand.FetchMapFromSql("SELECT * FROM infos where id=?",2)
 ```
 
 The result of datas is a two-dimensional map. Try to make him look like the PHP calls Mysql to return. The result is very convenient, as shown below.:
@@ -72,7 +72,7 @@ sqlHand := newSql.New(ctx)
 Read the data
 
 ```go
-datas,err := sqlHand.MysqlFetchMap("SELECT * FROM infos where age=? limit 3",30)
+datas,err := sqlHand.FetchMapFromSql("SELECT * FROM infos where age=? limit 3",30)
 if err!=nil {
     fmt.Printf("get data. [err:%v]", err)
 }
@@ -124,8 +124,28 @@ if err != nil {
 
 # Transaction processing data  #
 
-waiting..*[]: 
+```go
+sqlHand.Begin()
+stmt,err := sqlHand.TxPrepare("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?")
+result,err:=sqlHand.TxExec(stmt,"hahha",2)
+//reid,err := result.RowsAffected()
+err = sqlHand.Commit()
+if err != nil {
+    sqlHand.Rollback()
+    t.Fatalf("InterfaceCommit error. [err:%v]", err)
+}
+```
 
+If it is a supporting transaction engine, such as InnoDB, there is a system parameter setting automatically commit.
+```go
+mysql> show variables like '%autocommit%';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| autocommit    | ON    |
++---------------+-------+
+1 row in set (0.04 sec)
+```
 
 
 # Finally  #

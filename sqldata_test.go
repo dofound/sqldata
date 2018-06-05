@@ -35,7 +35,7 @@ func TestInitConfig(t *testing.T) {
 func TestMysqlFetchMap(t *testing.T) {
 	initConfig()
 	condition := 2
-	datas, err := sqlHand.MysqlFetchMap("SELECT * FROM infos where id=?", condition)
+	datas, err := sqlHand.FetchMapFromSql("SELECT * FROM infos where id=?", condition)
 	if err != nil {
 		t.Fatalf("get error. [err:%v]", err)
 	}
@@ -88,4 +88,27 @@ func TestGetDb(t *testing.T) {
 	}
 	t.Logf("TestGetDb op : %v", name)
 
+}
+
+func TestInterfaceCommit(t *testing.T) {
+	initConfig()
+	sqlHand.Begin()
+	stmt, err := sqlHand.TxPrepare("UPDATE `my`.`infos` SET `name`=? WHERE `id`=?")
+	result, err := sqlHand.TxExec(stmt, "hahha", 2)
+
+	stmt, err = sqlHand.TxPrepare("INSERT INTO `infos` (`name`, `age`) VALUES (?,?)")
+	result, err = sqlHand.TxExec(stmt, "肖commit1", 30)
+	lastid, err := result.LastInsertId()
+	t.Logf("======InterfaceCommit result 3 op : %v", lastid)
+
+	stmt, err = sqlHand.TxPrepare("INSERT INTO `infos` (`name`, `age`) VALUES (?,?)")
+	result, err = sqlHand.TxExec(stmt, 3)
+	t.Logf("======InterfaceCommit result 4 op : %v", err)
+
+	err = sqlHand.Commit()
+	if err != nil {
+		sqlHand.Rollback()
+		t.Fatalf("InterfaceCommit error. [err:%v]", err)
+	}
+	t.Logf("InterfaceCommit op is ok")
 }

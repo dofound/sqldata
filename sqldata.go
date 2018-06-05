@@ -15,7 +15,9 @@ type SQLData interface {
 	// Gets native objects, supports access to existing SQL methods
 	GetDb() (db *sql.DB)
 	// fetch data information
-	MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error)
+	FetchMapFromSql(sql string, args ...interface{}) (data resultData, err error)
+	// fetch data from rows
+	FetchMapFromRows(result *sql.Rows) (data resultData)
 	// insert data information
 	PrepareInsert(sql string, args ...interface{}) (lastID int64, err error)
 	// op database information
@@ -57,13 +59,20 @@ func (sd *implSQLData) GetDb() (db *sql.DB) {
 
 //MysqlFetchMap get the datas,He's a map format
 //The only way to get data is to return the information you want.
-func (sd *implSQLData) MysqlFetchMap(sql string, args ...interface{}) (data resultData, err error) {
+func (sd *implSQLData) FetchMapFromSql(sql string, args ...interface{}) (data resultData, err error) {
 	conDatabase := sd.conndb
 	resultRows, err := conDatabase.query(sd.ctx, sql, args...)
 	if err != nil {
 		log.Fatal("sqldata_MysqlFetchMap||sql=%s||err=%v", sql, err)
 	}
 	data = conDatabase.rowsMap(resultRows)
+	return
+}
+
+//FetchMapFromRows
+func (sd *implSQLData) FetchMapFromRows(result *sql.Rows) (data resultData) {
+	conDatabase := sd.conndb
+	data = conDatabase.rowsMap(result)
 	return
 }
 
@@ -133,7 +142,7 @@ func (sd *implSQLData) TxPrepare(query string) (stmt *sql.Stmt, err error) {
 
 //TxExec
 func (sd *implSQLData) TxExec(stmt *sql.Stmt, args ...interface{}) (rs sql.Result, sterr error) {
-	rs, sterr = sd.conndb.execFromStmt(stmt, args...)
+	rs, sterr = stmt.Exec(args...)
 	return
 }
 
