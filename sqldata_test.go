@@ -42,6 +42,11 @@ func TestMysqlFetchMap(t *testing.T) {
 	for pkey, val := range datas {
 		t.Log("%v,%v", pkey, val)
 	}
+
+	datasa, _ := sqlHand.FetchMapFromSql("desc infos")
+	for dkey, dval := range datasa {
+		t.Log("==========desc infos->%#v:%#v", dkey, dval)
+	}
 	t.Logf("TestMysqlFetchMap : %v", datas)
 }
 
