@@ -146,3 +146,8 @@ func (cn *connDb) rowsMap(rows *sql.Rows) (results resultData) {
 	}
 	return
 }
+
+//rowsObject
+func (cn *connDb) rowsObject(rows *sql.Rows) (results []interface{}) {
+	return
+}
