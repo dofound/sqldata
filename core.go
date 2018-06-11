@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql" //must import
 	"log"
+	"reflect"
 )
 
 //connDb  connect db information
@@ -148,6 +149,45 @@ func (cn *connDb) rowsMap(rows *sql.Rows) (results resultData) {
 }
 
 //rowsObject
-func (cn *connDb) rowsObject(rows *sql.Rows) (results []interface{}) {
+func (cn *connDb)rowsObject(rows *sql.Rows,dataStruct struct{}) (results []struct{}) {
+	columns,_:=rows.Columns()
+	svalues:=make([]interface{},len(columns))
+	reStruct:=reflect.ValueOf(&dataStruct).Elem()
+
+	toType:=reflect.TypeOf(dataStruct)
+	var toTypeNum int
+	toTypeNum = toType.NumField()
+	for si,sv:=range columns{
+		var tagName string
+		for kk:=0;kk<toTypeNum;kk++ {
+			ptag:=toType.Field(kk).Tag.Get("sql")
+			if sv == ptag {
+				tagName = toType.Field(kk).Name
+				break
+			}
+		}
+		if tagName==""{
+			continue
+		}
+		svalues[si] = reStruct.FieldByName(tagName).Addr().Interface()
+	}
+	for rows.Next() {
+		rows.Scan(svalues...)
+		results = append(results,dataStruct)
+	}
+	return
+}
+
+
+//findTagName
+func (cn *connDb)findTagName(dStruct interface{},tag string) (tagName string) {
+	toType:=reflect.TypeOf(dStruct)
+	for kk:=0;kk<toType.NumField();kk++ {
+		ptag:=toType.Field(kk).Tag.Get("sql")
+		if tag == ptag {
+			tagName = toType.Field(kk).Name
+			break
+		}
+	}
 	return
 }
