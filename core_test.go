@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+type mytestperson struct {
+	Id   uint8  `sql:"id"`
+	Age  uint8  `sql:"age"`
+	Name string `sql:"name"`
+}
+
 func TestConnect(t *testing.T) {
 	var conf *configDb
 	conf = &configDb{
@@ -19,13 +25,23 @@ func TestConnect(t *testing.T) {
 	ctx := context.Background()
 	rows, err := mytest.query(ctx, "SELECT * FROM infos limit 3")
 	if err != nil {
-		t.Fatalf("get data. [err:%v]", err)
+		t.Fatalf("===== Connect get data. [err:%v]", err)
 	}
 	datas := mytest.rowsMap(rows)
-	t.Logf("gat data : %v", datas)
-	t.Run("get connect", func(t *testing.T) {
-		//fmt.Println("ok")
-	})
+	t.Logf("=====Connect gat data : %v", datas)
+
+	//arows, err := mytest.query(ctx, "SELECT id,age,name FROM infos limit 3")
+	//if err != nil {
+	//	t.Fatalf("===== Connect get data. [err:%v]", err)
+	//}
+
+	//myp := myperson{}
+	//adatas := mytest.rowsObject(arows,myp)  //@todo here是问题
+	//t.Fatalf("=====Connect gat object : %v", adatas)
+	//for ppi:=0;ppi<len(adatas);ppi++ {
+	//	pppcc:=datas[ppi]
+	//	t.Log("======= indata:",pppcc["id"])
+	//}
 }
 
 func TestPrepare(t *testing.T) {
